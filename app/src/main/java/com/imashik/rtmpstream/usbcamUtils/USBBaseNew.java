@@ -134,7 +134,7 @@ public abstract class USBBaseNew
             stopPreview(uvcCamera);
             onPreview = true;
         }
-        return videoEncoder.prepareVideoEncoder(width, height, fps, bitrate, rotation,hardwareRotation,
+        return videoEncoder.prepareVideoEncoder(width, height, fps, bitrate, rotation,
                 iFrameInterval, FormatVideoEncoder.SURFACE);//
     }
 

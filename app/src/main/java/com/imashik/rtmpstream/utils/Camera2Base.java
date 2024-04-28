@@ -187,9 +187,10 @@ public abstract class Camera2Base implements GetAacData, GetVideoData, GetMicrop
             onPreview = true;
         }
         boolean result =
-                videoEncoder.prepareVideoEncoder(width, height, fps, bitrate, rotation, hardwareRotation,
+                videoEncoder.prepareVideoEncoder(width, height, fps, bitrate, rotation,
                         iFrameInterval, FormatVideoEncoder.SURFACE);//
         prepareCameraManager();
+
         return result;
     }
 
