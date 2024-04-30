@@ -29,14 +29,14 @@ import com.pedro.rtplibrary.view.OpenGlView;
 import com.serenegiant.usb.USBMonitor;
 import com.serenegiant.usb.UVCCamera;
 
-import net.ossrs.rtmp.ConnectCheckerRtmp;
+import com.pedro.rtmp.utils.ConnectCheckerRtmp;
 
 /**
  * More documentation see:
  * {@link com.pedro.rtplibrary.base.Camera1Base}
  * {@link com.pedro.rtplibrary.rtmp.RtmpCamera1}
  */
-public class UsbCamBroadcastActivity extends AppCompatActivity implements ConnectCheckerRtmp, SurfaceHolder.Callback {//, View.OnTouchListener
+public abstract class UsbCamBroadcastActivity extends AppCompatActivity implements ConnectCheckerRtmp, SurfaceHolder.Callback {//, View.OnTouchListener
     private USBMonitor usbMonitor;
     private UVCCamera uvcCamera;
     private final int width = 1280;

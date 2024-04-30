@@ -726,7 +726,7 @@ public abstract class Camera2Base implements GetAacData, GetVideoData, GetMicrop
 
     @Override
     public void onVideoFormat(MediaFormat mediaFormat) {
-        recordController.setVideoFormat(mediaFormat);
+        recordController.setVideoFormat(mediaFormat,false);
     }
 
     @Override

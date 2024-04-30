@@ -11,11 +11,11 @@ import androidx.annotation.RequiresApi;
 import com.pedro.rtplibrary.view.LightOpenGlView;
 import com.pedro.rtplibrary.view.OpenGlView;
 
-import net.ossrs.rtmp.ConnectCheckerRtmp;
-import net.ossrs.rtmp.SrsFlvMuxer;
+import com.pedro.rtmp.utils.ConnectCheckerRtmp;
+import com.pedro.rtmp.rtmp.RtmpClient;
 
 import java.nio.ByteBuffer;
-
+import  com.pedro.rtmp.flv.video.ProfileIop;
 /**
  * More documentation see:
  * {@link com.pedro.rtplibrary.base.Camera2Base}
@@ -25,31 +25,31 @@ import java.nio.ByteBuffer;
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class RtmpCamera2 extends Camera2Base {
 
-    private final SrsFlvMuxer srsFlvMuxer;
+    private final RtmpClient srsFlvMuxer;
 
     public RtmpCamera2(SurfaceView surfaceView, ConnectCheckerRtmp connectChecker) {
         super(surfaceView);
-        srsFlvMuxer = new SrsFlvMuxer(connectChecker);
+        srsFlvMuxer = new RtmpClient(connectChecker);
     }
 
     public RtmpCamera2(TextureView textureView, ConnectCheckerRtmp connectChecker) {
         super(textureView);
-        srsFlvMuxer = new SrsFlvMuxer(connectChecker);
+        srsFlvMuxer = new RtmpClient(connectChecker);
     }
 
     public RtmpCamera2(OpenGlView openGlView, ConnectCheckerRtmp connectChecker) {
         super(openGlView);
-        srsFlvMuxer = new SrsFlvMuxer(connectChecker);
+        srsFlvMuxer = new RtmpClient(connectChecker);
     }
 
     public RtmpCamera2(LightOpenGlView lightOpenGlView, ConnectCheckerRtmp connectChecker) {
         super(lightOpenGlView);
-        srsFlvMuxer = new SrsFlvMuxer(connectChecker);
+        srsFlvMuxer = new RtmpClient(connectChecker);
     }
 
     public RtmpCamera2(Context context, boolean useOpengl, ConnectCheckerRtmp connectChecker) {
         super(context, useOpengl);
-        srsFlvMuxer = new SrsFlvMuxer(connectChecker);
+        srsFlvMuxer = new RtmpClient(connectChecker);
     }
 
     /**
@@ -57,18 +57,18 @@ public class RtmpCamera2 extends Camera2Base {
      *
      * @param profileIop Could be ProfileIop.BASELINE or ProfileIop.CONSTRAINED
      */
-    public void setProfileIop(byte profileIop) {
+    public void setProfileIop(ProfileIop profileIop) {
         srsFlvMuxer.setProfileIop(profileIop);
     }
 
     @Override
     public void resizeCache(int newSize) throws RuntimeException {
-        srsFlvMuxer.resizeFlvTagCache(newSize);
+        srsFlvMuxer.resizeCache(newSize);
     }
 
     @Override
     public int getCacheSize() {
-        return srsFlvMuxer.getFlvTagCacheSize();
+        return srsFlvMuxer.getCacheSize();
     }
 
     @Override
@@ -118,8 +118,8 @@ public class RtmpCamera2 extends Camera2Base {
 
     @Override
     protected void prepareAudioRtp(boolean isStereo, int sampleRate) {
-        srsFlvMuxer.setIsStereo(isStereo);
-        srsFlvMuxer.setSampleRate(sampleRate);
+
+        srsFlvMuxer.setAudioInfo(sampleRate,isStereo );
     }
 
     @Override
@@ -129,12 +129,12 @@ public class RtmpCamera2 extends Camera2Base {
         } else {
             srsFlvMuxer.setVideoResolution(videoEncoder.getWidth(), videoEncoder.getHeight());
         }
-        srsFlvMuxer.start(url);
+        srsFlvMuxer.connect(url);
     }
 
     @Override
     protected void stopStreamRtp() {
-        srsFlvMuxer.stop();
+        srsFlvMuxer.disconnect();
     }
 
     @Override
@@ -159,7 +159,7 @@ public class RtmpCamera2 extends Camera2Base {
 
     @Override
     protected void onSpsPpsVpsRtp(ByteBuffer sps, ByteBuffer pps, ByteBuffer vps) {
-        srsFlvMuxer.setSpsPPs(sps, pps);
+        srsFlvMuxer.setSPSandPPS(sps, pps,vps);
     }
 
     @Override

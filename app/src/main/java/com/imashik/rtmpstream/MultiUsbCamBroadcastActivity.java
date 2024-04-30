@@ -35,8 +35,7 @@ import com.serenegiant.usb.common.UVCCameraHandler;
 import com.serenegiant.usb.widget.CameraViewInterface;
 import com.serenegiant.usb.widget.UVCCameraTextureView;
 
-import net.ossrs.rtmp.ConnectCheckerRtmp;
-
+import com.pedro.rtmp.utils.ConnectCheckerRtmp;
 import java.util.List;
 
 
@@ -45,7 +44,7 @@ import java.util.List;
  * {@link com.pedro.rtplibrary.base.Camera1Base}
  * {@link com.pedro.rtplibrary.rtmp.RtmpCamera1}
  */
-public class MultiUsbCamBroadcastActivity extends BaseActivity implements ConnectCheckerRtmp, SurfaceHolder.Callback, CameraDialog.CameraDialogParent {
+public abstract class MultiUsbCamBroadcastActivity extends BaseActivity implements ConnectCheckerRtmp, SurfaceHolder.Callback, CameraDialog.CameraDialogParent {
     private final int width = 1280;
     private final int height = 720;
     SharedPreferences pref;

@@ -30,14 +30,14 @@ import com.pedro.encoder.input.gl.SpriteGestureController;
 import com.pedro.encoder.input.video.CameraHelper;
 import com.pedro.rtplibrary.view.OpenGlView;
 
-import net.ossrs.rtmp.ConnectCheckerRtmp;
+import com.pedro.rtmp.utils.ConnectCheckerRtmp;
 
 /**
  * More documentation see:
  * {@link com.pedro.rtplibrary.base.Camera1Base}
  * {@link com.pedro.rtplibrary.rtmp.RtmpCamera1}
  */
-public class MobileCamBroadcastActivity extends AppCompatActivity implements ConnectCheckerRtmp, SurfaceHolder.Callback, View.OnTouchListener {
+public abstract class MobileCamBroadcastActivity extends AppCompatActivity implements ConnectCheckerRtmp, SurfaceHolder.Callback, View.OnTouchListener {
 
     private static final int PERMISSIONS_REQUEST_CODE = 101;
     private RtmpCamera2 rtmpCamera2;
