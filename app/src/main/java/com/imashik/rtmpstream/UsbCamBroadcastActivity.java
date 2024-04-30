@@ -29,7 +29,7 @@ import com.pedro.rtplibrary.view.OpenGlView;
 import com.serenegiant.usb.USBMonitor;
 import com.serenegiant.usb.UVCCamera;
 
-import net.ossrs.rtmp.ConnectCheckerRtmp;
+import com.pedro.rtmp.utils.ConnectCheckerRtmp;
 
 /**
  * More documentation see:
@@ -271,7 +271,10 @@ public class UsbCamBroadcastActivity extends AppCompatActivity implements Connec
     public void onAuthErrorRtmp() {
         runOnUiThread(() -> showToast("Auth error"));
     }
+    @Override
+    public void onConnectionStartedRtmp(String url ) {
 
+    }
     @Override
     public void onAuthSuccessRtmp() {
         runOnUiThread(() -> showToast("Auth success"));

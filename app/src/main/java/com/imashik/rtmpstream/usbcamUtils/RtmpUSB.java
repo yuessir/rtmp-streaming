@@ -8,12 +8,11 @@ import androidx.annotation.RequiresApi;
 
 import com.pedro.rtplibrary.view.LightOpenGlView;
 import com.pedro.rtplibrary.view.OpenGlView;
-
-import net.ossrs.rtmp.ConnectCheckerRtmp;
-import net.ossrs.rtmp.SrsFlvMuxer;
+import com.pedro.rtmp.rtmp.RtmpClient;
+import com.pedro.rtmp.utils.ConnectCheckerRtmp;
 
 import java.nio.ByteBuffer;
-
+import  com.pedro.rtmp.flv.video.ProfileIop;
 /**
  * More documentation see:
  * {@link com.pedro.rtplibrary.base.Camera1Base}
@@ -23,24 +22,24 @@ import java.nio.ByteBuffer;
 
 public class RtmpUSB extends USBBaseNew {
 
-    private SrsFlvMuxer srsFlvMuxer;
+    private RtmpClient srsFlvMuxer;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public RtmpUSB(OpenGlView openGlView, ConnectCheckerRtmp connectChecker) {
         super(openGlView);
-        srsFlvMuxer = new SrsFlvMuxer(connectChecker);
+        srsFlvMuxer = new RtmpClient(connectChecker);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public RtmpUSB(LightOpenGlView lightOpenGlView, ConnectCheckerRtmp connectChecker) {
         super(lightOpenGlView);
-        srsFlvMuxer = new SrsFlvMuxer(connectChecker);
+        srsFlvMuxer = new RtmpClient(connectChecker);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public RtmpUSB(Context context, ConnectCheckerRtmp connectChecker) {
         super(context);
-        srsFlvMuxer = new SrsFlvMuxer(connectChecker);
+        srsFlvMuxer = new RtmpClient(connectChecker);
     }
 
     /**
@@ -48,7 +47,7 @@ public class RtmpUSB extends USBBaseNew {
      *
      * @param profileIop Could be ProfileIop.BASELINE or ProfileIop.CONSTRAINED
      */
-    public void setProfileIop(byte profileIop) {
+    public void setProfileIop(ProfileIop profileIop) {
         srsFlvMuxer.setProfileIop(profileIop);
     }
 
@@ -59,8 +58,9 @@ public class RtmpUSB extends USBBaseNew {
 
     @Override
     protected void prepareAudioRtp(boolean isStereo, int sampleRate) {
-        srsFlvMuxer.setIsStereo(isStereo);
-        srsFlvMuxer.setSampleRate(sampleRate);
+       // srsFlvMuxer.setIsStereo(isStereo);
+     //   srsFlvMuxer.setSampleRate(sampleRate);
+        srsFlvMuxer.setAudioInfo(sampleRate,isStereo);
     }
 
     @Override
@@ -70,12 +70,12 @@ public class RtmpUSB extends USBBaseNew {
         } else {
             srsFlvMuxer.setVideoResolution(videoEncoder.getWidth(), videoEncoder.getHeight());
         }
-        srsFlvMuxer.start(url);
+        srsFlvMuxer.connect(url);
     }
 
     @Override
     protected void stopStreamRtp() {
-        srsFlvMuxer.stop();
+        srsFlvMuxer.disconnect();
     }
 
     @Override
@@ -85,7 +85,7 @@ public class RtmpUSB extends USBBaseNew {
 
     @Override
     protected void onSpsPpsVpsRtp(ByteBuffer sps, ByteBuffer pps, ByteBuffer vps) {
-        srsFlvMuxer.setSpsPPs(sps, pps);
+        srsFlvMuxer.setSPSandPPS(sps, pps,vps);
     }
 
     @Override

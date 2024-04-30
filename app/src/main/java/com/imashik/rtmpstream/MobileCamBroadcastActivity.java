@@ -30,7 +30,7 @@ import com.pedro.encoder.input.gl.SpriteGestureController;
 import com.pedro.encoder.input.video.CameraHelper;
 import com.pedro.rtplibrary.view.OpenGlView;
 
-import net.ossrs.rtmp.ConnectCheckerRtmp;
+import com.pedro.rtmp.utils.ConnectCheckerRtmp;
 
 /**
  * More documentation see:
@@ -193,6 +193,11 @@ public class MobileCamBroadcastActivity extends AppCompatActivity implements Con
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+
+    }
+
+    @Override
+    public void onConnectionStartedRtmp(String url ) {
 
     }
 

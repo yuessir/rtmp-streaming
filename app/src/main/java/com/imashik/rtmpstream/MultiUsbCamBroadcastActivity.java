@@ -35,7 +35,7 @@ import com.serenegiant.usb.common.UVCCameraHandler;
 import com.serenegiant.usb.widget.CameraViewInterface;
 import com.serenegiant.usb.widget.UVCCameraTextureView;
 
-import net.ossrs.rtmp.ConnectCheckerRtmp;
+import com.pedro.rtmp.utils.ConnectCheckerRtmp;
 
 import java.util.List;
 
@@ -301,7 +301,10 @@ public class MultiUsbCamBroadcastActivity extends BaseActivity implements Connec
     public void onAuthSuccessRtmp() {
         runOnUiThread(() -> showToast("Auth success"));
     }
+    @Override
+    public void onConnectionStartedRtmp(String url ) {
 
+    }
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
